@@ -4,7 +4,7 @@ Created on Feb 7, 2017
 @author: Static
 '''
 
-from roboc.labyrinthe import Maze
+from roboc.maze import Maze
 
 class Carte:
 
