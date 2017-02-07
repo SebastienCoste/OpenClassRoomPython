@@ -1,4 +1,13 @@
 eclipse.preferences.version=1
+encoding//maze/Roboc.py=Utf-8
+encoding//maze/roboc/Carte.py=latin1
+encoding//maze/roboc/Ihm.py=Utf-8
+encoding//maze/roboc/Maze.py=Utf-8
+encoding//maze/roboc/Point.py=latin1
+encoding//maze/roboc/RobocException.py=latin1
+encoding//maze/roboc/Validator.py=latin1
+encoding//maze/roboc/connector/Connector.py=latin1
+encoding//maze/roboc/connector/Messages.py=latin1
 encoding//pack2/Hang.py=latin1
 encoding//pack2/files.py=latin1
 encoding/ZCasino.py=latin1

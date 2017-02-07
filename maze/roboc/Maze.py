@@ -4,6 +4,8 @@
 
 from roboc.Point import Point
 from roboc.RobocException import RobocException
+import os
+
 class Maze:
     
     authorisedChars = [' ', 'O', 'X', 'U', '.']
@@ -11,13 +13,17 @@ class Maze:
     """Classe représentant un labyrinthe."""
 
     def __init__(self, dumpString):
-        self.grille = [[]]
+        self.grid = [[]]
         height, width = 0,0
         mazewidth = -1
+        self.exit = None
+        self.robot = None
         for c in dumpString:
             if (c == '\n'):
+                if width == 0:
+                    continue
                 height+=1
-                self.grille.append([])
+                self.grid.append([])
                 if mazewidth == -1:
                     mazewidth = width
                 if mazewidth != width:
@@ -27,7 +33,7 @@ class Maze:
             elif (c.upper() not in Maze.authorisedChars):
                 continue
             else:
-                self.grille[height].append(c)
+                self.grid[height].append(c)
                 if (c.upper() == 'X'):
                     self.robot = Point(height, width)
                 elif (c.upper() == 'U'):
@@ -38,6 +44,21 @@ class Maze:
     
     def __str__(self):
         res = "";
-        for h in self.grille:
+        for h in self.grid:
             res +=''.join(h) + '\n'
         return res
+    
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
