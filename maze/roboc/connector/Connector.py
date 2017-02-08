@@ -5,9 +5,19 @@ If we don't want to talk through sysout, we can change the connector
 @author: Static
 '''
 
-
-def ask(message):
-    return input (message)
-
-def send(message):
-    print(message)
+class Connector:
+    
+    def __init__(self, lan):
+        self.lan = lan
+        
+    def ask(self, message):
+        return input (message)
+    
+    def send(self, message):
+        print(message)
+        
+    def printMaze(self, mapPlayed):
+        res = "";
+        for h in mapPlayed.maze.grid:
+            res +=''.join(h) + '\n'
+        return res

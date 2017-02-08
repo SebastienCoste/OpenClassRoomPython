@@ -33,7 +33,6 @@ class Map:
         with open(os.path.join(self.savepath, self.saveName), 'w') as file:
             file.write(str(self.maze))
     
-    def thisIsTheEnd(self):
         
             
             

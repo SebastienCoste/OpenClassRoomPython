@@ -9,8 +9,8 @@ Exécutez-le avec Python pour lancer le jeu.
 from roboc.RobocException import RobocException
 from roboc.Ihm import IHM
 from roboc.Validator import Validator
-from roboc import Messages as m
-
+from roboc.connector import Messages as m
+import argparse
 # On charge les cartes existantes
 
 
@@ -19,8 +19,21 @@ from roboc import Messages as m
 
 if __name__ == '__main__':
     
+    parser = argparse.ArgumentParser()
+    parser.parse_args()
+    parser.add_argument("-l", "--lan", help="language: 'fr'(default) or 'en'")
+    args = parser.parse_args()
+    lan = "FR"
+    if args.lan:
+        if args.lan.upper() in m.authorizedLan:
+            lan = args.lan.upper()
+        else:
+            raise RobocException("Unrecognized language")
+    
+    
+    
     #the manager talks with the player
-    manager = IHM()
+    manager = IHM(lan)
     
     #The validator of map, moves
     validator = Validator()
@@ -34,9 +47,10 @@ if __name__ == '__main__':
             validator.validateInitMap(mapPlayed)
             loadOK = True
         except RobocException as rex: 
-            manager.send(m.WrongMap + rex)
+            manager.send("WrongMap")
+            manager.send(rex)
             mapPlayed = manager.loadPlayedMap()
-    manager.send(mapPlayed.maze)
+    manager.printMaze(mapPlayed)
     
     #Before we play, we save
     if mapPlayed.saveName == None:

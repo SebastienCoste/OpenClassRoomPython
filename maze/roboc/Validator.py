@@ -5,7 +5,6 @@ Created on Feb 7, 2017
 '''
 
 from roboc.RobocException import RobocException
-from roboc import Messages as m
 
 class Validator:
     
@@ -15,7 +14,7 @@ class Validator:
     def validateInitMap(self, map):
         
         if map.maze.robot == None:
-            raise RobocException (m.NoRobot)
+            raise RobocException ("No Robot Exception")
 
     def thisIsTheEnd(self, map):
         return map.maze.robot.equals(map.maze.exit)

@@ -4,7 +4,6 @@ Created on Feb 7, 2017
 @author: Static
 '''
 from roboc.RobocException import RobocException
-from roboc import Messages as m
 class Point:
     
     def __init__(self, height, width):
@@ -38,5 +37,5 @@ class Point:
         elif (direction == 'E'):
             nextPoint.width +=1
         else:
-            raise RobocException(m.UnknownMove)
+            raise RobocException("Unknown Move Exception")
         return nextPoint

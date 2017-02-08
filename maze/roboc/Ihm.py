@@ -8,8 +8,7 @@ Created on Feb 7, 2017
 import os, re
 from roboc.Carte import Map
 from roboc.RobocException import RobocException
-from roboc import Connector as c
-from roboc import Messages as m
+from roboc.connector import Connector
 
 class IHM:
     '''
@@ -17,7 +16,8 @@ class IHM:
     '''
 
 
-    def __init__(self):
+    def __init__(self, lan):
+        self.c = Connector(lan)
         self.absolutePathToMaps = os.path.abspath("./roboc/cartes")
         self.absolutePathToSaves = os.path.abspath("./roboc/saves")
         self.existingNames = []
@@ -43,9 +43,9 @@ class IHM:
                 name = file[:-3].lower()
                 cartes.append(Map(name, path))
         
-        c.send(m.ExistingMaze)
+        self.c.send("ExistingMaze")
         for i, carte in enumerate(cartes):
-            c.send("  {} - {}".format(i + 1, carte.nom))
+            self.c.send("  {} - {}".format(i + 1, carte.nom))
         
         for file in os.listdir(self.absolutePathToSaves):
             if file.endswith(".txt"):
@@ -56,12 +56,12 @@ class IHM:
                 
         allMaps = len(cartes)
         for i, carte in enumerate(saves):
-            c.send("  {} - [saved] {}".format(i + len(cartes) + 1, carte.nom))
+            self.c.send("  {} - [saved] {}".format(i + len(cartes) + 1, carte.nom))
     
         select = 0
         allMaps += len(saves)
         while (select < 1 or select > allMaps):
-            selectStr = c.ask (m.GetNumberOfMaze)
+            selectStr = self.c.ask ("GetNumberOfMaze")
             try :
                 select = int(selectStr)
             except:
@@ -81,7 +81,7 @@ class IHM:
     def getSavePathAndName(self):
         nameFound = ""
         while self.matcher.search(nameFound) is None:
-            nameFound = c.ask (m.GetSavePathAndName)
+            nameFound = self.c.ask ("GetSavePathAndName")
             nameFound = nameFound.strip()
             if nameFound in self.existingNames:
                 nameFound = ""
@@ -90,24 +90,26 @@ class IHM:
     
     def keepOrDelete(self, mapPlayed):
         answer = ""
-        while self.matcher.matcherYesNo(answer) is None:
-            answer = c.ask (m.KeepOrDelete)
+        while self.matcherYesNo.search(answer) is None:
+            answer = self.c.ask ("KeepOrDelete")
             
-        if not self.matcher.matcherYes(answer) is None:
+        if not self.matcherYes.search(answer) is None:
             os.remove(os.path.join(mapPlayed.savepath, mapPlayed.saveName))
     
     def getNextMove(self):
         answer = ""
-        while self.matcher.matcherMove(answer) is None and self.matcher.matcherQuit(answer) is None:
-            answer = c.ask (m.GetNextMove)
-        if not self.matcher.matcherQuit(answer) is None:
+        while self.matcherMove.search(answer) is None and self.matcherQuit.search(answer) is None:
+            answer = self.c.ask ("GetNextMove")
+        if not self.matcherQuit.search(answer) is None:
             return None
         return answer
     
     def send(self, message):
-        c.send(message)
+        self.c.send(message)
     
-    
+    def printMaze(self, mapPlayed):
+        self.c.printMaze(mapPlayed)
+        
     
     
     
