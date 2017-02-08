@@ -8,7 +8,8 @@ Created on Feb 7, 2017
 import os, re
 from roboc.Carte import Map
 from roboc.RobocException import RobocException
-from roboc.connector import Connector
+from roboc.connector.Connector import Connector
+from roboc.connector.Translator import Translator
 
 class IHM:
     '''
@@ -18,15 +19,16 @@ class IHM:
 
     def __init__(self, lan):
         self.c = Connector(lan)
+        self.translator = Translator(lan)
         self.absolutePathToMaps = os.path.abspath("./roboc/cartes")
         self.absolutePathToSaves = os.path.abspath("./roboc/saves")
         self.existingNames = []
         self.matcher = re.compile(r"^[A-Za-z0-9]+$")
-        self.matcherMove = re.compile(r"^[SsNnOoEe][0-9]{,4}$")
-        self.matcherQuit = re.compile(r"^[Qq]$")
-        self.matcherYes = re.compile(r"^[OoYy]$")
-        self.matcherNo = re.compile(r"^[Nn]$")
-        self.matcherYesNo = re.compile(r"^[OoYyNn]$")
+        self.matcherMove = re.compile(r"^[" + self.translator.getTechMatcher("matcherMove") + "][0-9]{,4}$")
+        self.matcherQuit = re.compile(r"^[" + self.translator.getTechMatcher("matcherQuit") + "]$")
+        self.matcherYes = re.compile(r"^[" + self.translator.getTechMatcher("matcherYes") + "]$")
+        self.matcherNo = re.compile(r"^[" + self.translator.getTechMatcher("matcherNo") + "]$")
+        self.matcherYesNo = re.compile(r"^[" + self.translator.getTechMatcher("matcherYesNo") + "]$")
     
 
     '''
@@ -84,6 +86,7 @@ class IHM:
             nameFound = self.c.ask ("GetSavePathAndName")
             nameFound = nameFound.strip()
             if nameFound in self.existingNames:
+                self.c.send("ExistingSave")
                 nameFound = ""
             
         return self.absolutePathToSaves, nameFound+".txt"
