@@ -22,3 +22,6 @@ class Translator(object):
         
     def getTechMatcher(self, matcherName):
         return m.LanguageToTech[self.lan][matcherName]
+
+
+
