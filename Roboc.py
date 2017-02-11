@@ -70,6 +70,7 @@ if __name__ == '__main__':
         
     if validator.thisIsTheEnd(mapPlayed):
         manager.keepOrDelete(mapPlayed)
+        
 
 
 

@@ -105,7 +105,7 @@ class IHM:
             answer = self.c.ask ("GetNextMove")
         if not self.matcherQuit.search(answer) is None:
             return None
-        return answer
+        return self.translator(answer)
     
     def send(self, message):
         self.c.send(message)

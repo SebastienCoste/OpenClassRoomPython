@@ -31,19 +31,34 @@ English= {
 
 #Technical configuration
 FrenchTech= {
-        "matcherMove": "SsNnOoEe",
-        "matcherQuit": "Qq",
-        "matcherYes": "Oo",
-        "matcherNo": "Nn",
-        "matcherYesNo": "OoNn"
-}
+    "matcherMove": "SsNnOoEe",
+    "matcherQuit": "Qq",
+    "matcherYes": "Oo",
+    "matcherNo": "Nn",
+    "matcherYesNo": "OoNn"
+    }       
 EnglishTech= {
-        "matcherMove": "SsNnOoEe",
-        "matcherQuit": "Qq",
-        "matcherYes": "Yy",
-        "matcherNo": "Nn",
-        "matcherYesNo": "YyNn"
-}
+    "matcherMove": "SsNnOoEe",
+    "matcherQuit": "Qq",
+    "matcherYes": "Yy",
+    "matcherNo": "Nn",
+    "matcherYesNo": "YyNn"
+    }
+
+FrenchMoves = {
+    "N":"UP",
+    "S":"DOWN",
+    "E":"RIGHT",
+    "O":"LEFT"
+    }
+EnglishMoves = {
+    "N":"UP",
+    "S":"DOWN",
+    "E":"RIGHT",
+    "W":"LEFT"
+    }
+
 authorizedLan = ["FR", "EN"]
 LanguageToMessages = {authorizedLan[0]: French, authorizedLan[1]: English}
 LanguageToTech = {authorizedLan[0]: FrenchTech, authorizedLan[1]: EnglishTech}
+LanguageToMove = {authorizedLan[0]: FrenchMoves, authorizedLan[1]: EnglishMoves}

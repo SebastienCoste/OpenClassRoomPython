@@ -11,10 +11,10 @@ class Validator:
     def __init__(self):
         pass
 
-    def validateInitMap(self, map):
+    def validateInitMap(self, mapPlayed):
         
-        if map.maze.robot == None:
+        if mapPlayed.maze.robot == None:
             raise RobocException ("No Robot Exception")
 
-    def thisIsTheEnd(self, map):
-        return map.maze.robot.equals(map.maze.exit)
+    def thisIsTheEnd(self, mapPlayed):
+        return mapPlayed.maze.robot.equals(map.maze.exit)
