@@ -28,13 +28,13 @@ class Point:
     '''
     def getNext(self, direction):
         nextPoint = Point(self.height, self.width)
-        if (direction == 'S'):
+        if (direction == 'DOWN'):
             nextPoint.height +=1
-        elif (direction == 'N'):
+        elif (direction == 'UP'):
             nextPoint.height -=1
-        elif (direction == 'O'):
+        elif (direction == 'LEFT'):
             nextPoint.width -=1
-        elif (direction == 'E'):
+        elif (direction == 'RIGHT'):
             nextPoint.width +=1
         else:
             raise RobocException("Unknown Move Exception")

@@ -17,4 +17,21 @@ class Validator:
             raise RobocException ("No Robot Exception")
 
     def thisIsTheEnd(self, mapPlayed):
-        return mapPlayed.maze.robot.equals(map.maze.exit)
+        return mapPlayed.maze.robot.equals(mapPlayed.maze.exit)
+    
+    def isOnTheEnd(self, mapPlayed, position):
+        return position.equals(mapPlayed.maze.exit)
+    
+    def validateMove(self, mapPlayed, direction, steps):
+        nexPositions = mapPlayed.maze.robot.getNextPositions(direction, steps)
+        timesMove = 0
+        for pos in nexPositions:
+            if not self.validatePosition(mapPlayed, pos):
+                return 0
+            timesMove+=1
+            if self.isOnTheEnd(mapPlayed, pos):
+                return timesMove
+        return timesMove;
+    
+    def validatePosition(self, mapPlayed, position):
+        return mapPlayed.maze.isWalkingPoint(position)

@@ -26,9 +26,12 @@ class Map:
             dumpString = file.read()
             self.maze = Maze(dumpString)
         
-        with open(self.filepath.replace('txt', 'dat'), 'rb') as file:
-            depick = pickle.Unpickler(file)
-            self.data = depick.load()
+        try :
+            with open(self.filepath.replace('txt', 'dat'), 'rb') as file:
+                depick = pickle.Unpickler(file)
+                self.data = depick.load()
+        except: 
+            self.data = None
         if self.data == None:
             self.data = Data()
     
@@ -40,11 +43,22 @@ class Map:
         with open(os.path.join(self.savepath, self.saveName), 'w') as file:
             file.write(str(self.maze))
         
-        with open(self.filepath.replace('txt', 'dat'), 'wb') as file:
+        with open(os.path.join(self.savepath, self.saveName.replace('txt', 'dat')), 'wb') as file:
             pick = pickle.Pickler(file)
             pick.dump(self.data)
             
+    def moveAlong(self, direction, times, manager):
+        rob = self.maze.robot
+        for _ in range(times):
+            rob = rob.getNext(direction)
+            curIsDoor = self.data.isOnDoor
+            nextType = self.maze.getValuePoint(rob)
+            curType = "EMPTY"
+            if curIsDoor:
+                curType = "DOOR"
             
-            
-            
+            self.maze.moveRobot(rob, curType)
+            self.data.isOnDoor = nextType == "DOOR"
+            self.save()
+            manager.printMaze(self)
             

@@ -39,39 +39,48 @@ if __name__ == '__main__':
     validator = Validator()
     
     #Let's get the map
-    mapPlayed = manager.loadPlayedMap()
-    loadOK = False
-    while not loadOK:
-        try:
-            mapPlayed.load()
-            validator.validateInitMap(mapPlayed)
-            loadOK = True
-        except RobocException as rex: 
-            manager.send("WrongMap")
-            manager.send(rex)
-            mapPlayed = manager.loadPlayedMap()
-    manager.printMaze(mapPlayed)
+    iWantToPlayAGame = True
+    while iWantToPlayAGame:
+        mapPlayed = manager.loadPlayedMap()
+        loadOK = False
+        while not loadOK:
+            try:
+                mapPlayed.load()
+                validator.validateInitMap(mapPlayed)
+                loadOK = True
+            except RobocException as rex: 
+                manager.send("WrongMap")
+                manager.send(rex)
+                mapPlayed = manager.loadPlayedMap()
+        manager.printMaze(mapPlayed)
+        
+        #Before we play, we save
+        if mapPlayed.saveName == None:
+            path, name = manager.getSavePathAndName()
+            mapPlayed.setSavePath(path, name)
+            mapPlayed.save()
     
-    #Before we play, we save
-    if mapPlayed.saveName == None:
-        path, name = manager.getSavePathAndName()
-        mapPlayed.setSavePath(path, name)
-        mapPlayed.save()
-
-    #Now We play
-    playerWannaPlay = True
-    while not validator.thisIsTheEnd(mapPlayed) and playerWannaPlay:
-        move = manager.getNextMove()
-        if move == None:
-            playerWannaPlay = False
-            continue
+        #Now We play
+        playerWannaPlay = True
+        while not validator.thisIsTheEnd(mapPlayed) and playerWannaPlay:
+            move, times = manager.getNextMove()
+            if move == None:
+                playerWannaPlay = False
+                continue
+            timesMove = validator.validateMove(mapPlayed, move, times)
+            if timesMove == 0 :
+                manager.send("WrongMove")
+            else:
+                mapPlayed.moveAlong(move, timesMove, manager)
+            if validator.thisIsTheEnd(mapPlayed):
+                continue
+            
+        if validator.thisIsTheEnd(mapPlayed):
+            manager.keepOrDelete(mapPlayed)
         
-        pass
+        iWantToPlayAGame = manager.playAnotherGame()
         
-    if validator.thisIsTheEnd(mapPlayed):
-        manager.keepOrDelete(mapPlayed)
-        
-
+            
 
 
 

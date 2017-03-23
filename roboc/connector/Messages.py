@@ -9,24 +9,28 @@ starting i18n as well
 #messages 
 French= {
     "KeepOrDelete": "Partie terminee. Voulez vous supprimer la sauvegarde? O/N",
+    "PlayAnotherGame" : "Jouer une autre partie ? O/N",
     "GetNextMove": "Quel est votre prochain mouvement ? N:Nord, S:Sud, O:Ouest, E:Est, Q:Quitter",
     "GetSavePathAndName": "Quel nom donner à la sauvegarde? (caracteres alphanumeriques uniquement)",
     "GetNumberOfMaze": "Entrez un numéro de labyrinthe pour commencer à jouer: ",
     "ExistingMaze": "Labyrinthes existants :",
     "WrongMap": "La carte est corrompue, veuillez en choisir une autre.",
     "UnknownMove": "Lettre non reconnue (S N O E uniquement)",
-    "ExistingSave" : "Une sauvegarde portant ce nom existe deja"
+    "ExistingSave" : "Une sauvegarde portant ce nom existe deja",
+    "WrongMove" : "Le deplacement est impossible"
 }
 
 English= {
     "KeepOrDelete": "Game ended. Do you want to delete the save? Y/N",
+    "PlayAnotherGame" : "Play another game ? Y/N",
     "GetNextMove": "What is your next move ? N:North, S:South, W:West, E:Est, Q:Quit",
     "GetSavePathAndName": "How the save will be named? (alphanumeric characters only)",
     "GetNumberOfMaze": "Select the number of the maze you want to play: ",
     "ExistingMaze": "Existing mazes :",
     "WrongMap": "the maze is corrupted, please take another.",
     "UnknownMove": "Unrecognized move (S N O E only)",
-    "ExistingSave": "A save with this name already exists"
+    "ExistingSave": "A save with this name already exists",
+    "WrongMove" : "Unable to move along this path"
 }
 
 #Technical configuration

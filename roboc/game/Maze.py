@@ -9,6 +9,13 @@ import os
 class Maze:
     
     authorisedChars = [' ', 'O', 'X', 'U', '.']
+    walkableChars = [' ', 'X', 'U', '.']
+    significations= {
+    " " : "EMPTY",
+    "X" : "ROBOT",
+    "U" : "EXIT",
+    "." : "DOOR"           
+    }
 
     """Classe représentant un labyrinthe."""
 
@@ -41,6 +48,19 @@ class Maze:
             
             width +=1
 
+    def isWalkingPoint(self, position):
+        return self.grid[position.height][position.width] in Maze.walkableChars
+    
+    def getValuePoint(self, position):
+        return Maze.significations[self.grid[position.height][position.width]]
+    
+    def moveRobot(self, position, currentPositionType):
+        if currentPositionType == "DOOR":
+            self.grid[self.robot.height][self.robot.width] = '.'
+        else:
+            self.grid[self.robot.height][self.robot.width] = ' '
+        self.robot = position
+        self.grid[self.robot.height][self.robot.width] = 'X'
     
     def __str__(self):
         res = "";

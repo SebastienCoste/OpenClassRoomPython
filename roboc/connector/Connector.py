@@ -22,4 +22,4 @@ class Connector:
         res = "";
         for h in mapPlayed.maze.grid:
             res +=''.join(h) + '\n'
-        return res
+        print(res)

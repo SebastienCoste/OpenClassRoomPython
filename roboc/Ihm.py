@@ -6,7 +6,7 @@ Created on Feb 7, 2017
 '''
 
 import os, re
-from roboc.Carte import Map
+from roboc.game.Carte import Map
 from roboc.RobocException import RobocException
 from roboc.connector.Connector import Connector
 from roboc.connector.Translator import Translator
@@ -24,7 +24,7 @@ class IHM:
         self.absolutePathToSaves = os.path.abspath("./roboc/saves")
         self.existingNames = []
         self.matcher = re.compile(r"^[A-Za-z0-9]+$")
-        self.matcherMove = re.compile(r"^[" + self.translator.getTechMatcher("matcherMove") + "][0-9]{,4}$")
+        self.matcherMove = re.compile(r"^[" + self.translator.getTechMatcher("matcherMove") + "][ ]*[0-9]{,4}$")
         self.matcherQuit = re.compile(r"^[" + self.translator.getTechMatcher("matcherQuit") + "]$")
         self.matcherYes = re.compile(r"^[" + self.translator.getTechMatcher("matcherYes") + "]$")
         self.matcherNo = re.compile(r"^[" + self.translator.getTechMatcher("matcherNo") + "]$")
@@ -91,6 +91,13 @@ class IHM:
             
         return self.absolutePathToSaves, nameFound+".txt"
     
+    def playAnotherGame(self):
+        answer = ""
+        while self.matcherYesNo.search(answer) is None:
+            answer = self.c.ask ("PlayAnotherGame")
+        return not self.matcherYes.search(answer) is None
+    
+    
     def keepOrDelete(self, mapPlayed):
         answer = ""
         while self.matcherYesNo.search(answer) is None:
@@ -98,14 +105,23 @@ class IHM:
             
         if not self.matcherYes.search(answer) is None:
             os.remove(os.path.join(mapPlayed.savepath, mapPlayed.saveName))
+            os.remove(os.path.join(mapPlayed.savepath, mapPlayed.saveName.replace('txt', 'dat')))
     
     def getNextMove(self):
         answer = ""
         while self.matcherMove.search(answer) is None and self.matcherQuit.search(answer) is None:
             answer = self.c.ask ("GetNextMove")
+            answer = answer.replace(' ', '').upper()
         if not self.matcherQuit.search(answer) is None:
-            return None
-        return self.translator(answer)
+            return None, None
+        move = self.translator.getMove(answer[:1])
+        times = 1
+        if len(answer) > 1:
+            try :
+                times = int(answer[1:])
+            except:
+                times = 1
+        return move, times
     
     def send(self, message):
         self.c.send(message)
