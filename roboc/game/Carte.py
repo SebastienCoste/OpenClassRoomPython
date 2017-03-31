@@ -8,6 +8,11 @@ from roboc.game.Maze import Maze
 from roboc.game.Data import Data
 import os, pickle
 
+'''
+    It represents the current save with:
+        - maze: the maze
+        - data: some usefull data as "am I on a door right now ?"
+'''
 class Map:
 
     """Objet de transition entre un fichier et un labyrinthe."""

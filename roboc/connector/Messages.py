@@ -17,7 +17,8 @@ French= {
     "WrongMap": "La carte est corrompue, veuillez en choisir une autre.",
     "UnknownMove": "Lettre non reconnue (S N O E uniquement)",
     "ExistingSave" : "Une sauvegarde portant ce nom existe deja",
-    "WrongMove" : "Le deplacement est impossible"
+    "WrongMove" : "Le deplacement est impossible",
+    "LanBeta" : "Attention cette langue est en beta test"
 }
 
 English= {
@@ -30,7 +31,8 @@ English= {
     "WrongMap": "the maze is corrupted, please take another.",
     "UnknownMove": "Unrecognized move (S N O E only)",
     "ExistingSave": "A save with this name already exists",
-    "WrongMove" : "Unable to move along this path"
+    "WrongMove" : "Unable to move along this path",
+    "LanBeta" : "Please notice the language is still in beta test"
 }
 
 #Technical configuration

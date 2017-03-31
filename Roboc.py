@@ -21,7 +21,7 @@ if __name__ == '__main__':
     
     parser = argparse.ArgumentParser()
     parser.parse_args()
-    parser.add_argument("-l", "--lan", help="language: 'fr'(default) or 'en'")
+    parser.add_argument("-l", "--lan", help="language: 'fr'(default) or 'en' (beta)")
     args = parser.parse_args()
     lan = "FR"
     if args.lan:
@@ -29,7 +29,6 @@ if __name__ == '__main__':
             lan = args.lan.upper()
         else:
             raise RobocException("Unrecognized language")
-    
     
     
     #the manager talks with the player

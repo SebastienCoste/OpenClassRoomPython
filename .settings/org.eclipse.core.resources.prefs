@@ -5,6 +5,7 @@ encoding//exercises/test.py=latin1
 encoding//pack2/Hang.py=latin1
 encoding//pack2/files.py=latin1
 encoding//roboc/Ihm.py=Utf-8
+encoding//roboc/Point.py=latin1
 encoding//roboc/RobocException.py=latin1
 encoding//roboc/Validator.py=latin1
 encoding//roboc/connector/Connector.py=latin1
