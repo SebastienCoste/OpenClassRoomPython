@@ -13,13 +13,17 @@ from roboc.connector.Translator import Translator
 
 class IHM:
     '''
-    Here we manage interactions with the player
+    Here we manage interactions with the player. 
+    Everything is gathered in one class. Let say we want an IA, it replaces this class 
     '''
 
 
     def __init__(self, lan, type):
         self.c = Connector(lan, type)
         self.translator = Translator(lan)
+        
+        if not lan == "FR": 
+           self.c.send("LanBeta")   
         self.absolutePathToMaps = os.path.abspath("./roboc/cartes")
         self.absolutePathToSaves = os.path.abspath("./roboc/saves")
         self.existingNames = []

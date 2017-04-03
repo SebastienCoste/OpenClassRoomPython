@@ -8,6 +8,7 @@ from roboc.connector import Messages as m
 class Translator(object):
     '''
     It will be used to translate messages, and actions from the user
+    Here we manage i18n, in input we have the key and we decide which value to provide back
     '''
 
 

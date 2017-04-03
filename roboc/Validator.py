@@ -6,6 +6,11 @@ Created on Feb 7, 2017
 
 from roboc.RobocException import RobocException
 
+'''
+    Validation machine. It validate the map at start 
+    It ends the game if we are on the exit 
+    It validates the user's move
+'''
 class Validator:
     
     def __init__(self):

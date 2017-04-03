@@ -6,6 +6,15 @@ from roboc.Point import Point
 from roboc.RobocException import RobocException
 import os
 
+'''
+    The maze. 
+    - grid: contains the map of the current maze as a vector of vector
+    - robot: contains the position of the robot
+    - exit: position of the exit
+    - authorisedChars, walkableChars, significations: class scoped data about the definition of each point of the maze. 
+        The main goal of it is to never outside of this class know how empty spaces, wall, doors etc are defined
+'''
+
 class Maze:
     
     authorisedChars = [' ', 'O', 'X', 'U', '.']
