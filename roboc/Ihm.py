@@ -17,8 +17,8 @@ class IHM:
     '''
 
 
-    def __init__(self, lan):
-        self.c = Connector(lan)
+    def __init__(self, lan, type):
+        self.c = Connector(lan, type)
         self.translator = Translator(lan)
         self.absolutePathToMaps = os.path.abspath("./roboc/cartes")
         self.absolutePathToSaves = os.path.abspath("./roboc/saves")

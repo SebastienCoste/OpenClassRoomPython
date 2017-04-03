@@ -8,9 +8,10 @@ from roboc.connector.Translator import Translator
 
 class Connector:
     
-    def __init__(self, lan):
+    def __init__(self, lan, type):
         self.lan = lan
         self.translator = Translator(lan)
+        self.type = type
         
     def ask(self, message):
         return input (self.translator.getMessage(message))

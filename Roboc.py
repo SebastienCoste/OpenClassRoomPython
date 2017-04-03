@@ -7,21 +7,16 @@ Exécutez-le avec Python pour lancer le jeu.
 """
 
 from roboc.RobocException import RobocException
-from roboc.Ihm import IHM
-from roboc.Validator import Validator
 from roboc.connector import Messages as m
 import argparse
-# On charge les cartes existantes
-
-
-
-
+from roboc.network import Client as c, Server as s, StandAlone as sa
 
 if __name__ == '__main__':
     
     parser = argparse.ArgumentParser()
     parser.parse_args()
     parser.add_argument("-l", "--lan", help="language: 'fr'(default) or 'en'")
+    parser.add_argument("-t", "--type", help="type: c for client, s for server or sa for standalone")
     args = parser.parse_args()
     lan = "FR"
     if args.lan:
@@ -30,56 +25,19 @@ if __name__ == '__main__':
         else:
             raise RobocException("Unrecognized language")
     
+    network = None
+    if args.type:
+        if args.type.upper() == "C":
+            network = c.Client(lan)
+        elif args.type.upper() == "S":
+            network = s.Server(lan)
+        elif args.type.upper() == "SA":
+            network = sa.StandAlone(lan)
+    else:
+        network = sa.StandAlone(lan)
+        #raise RobocException("Unrecognized network type")
     
-    
-    #the manager talks with the player
-    manager = IHM(lan)
-    
-    #The validator of map, moves
-    validator = Validator()
-    
-    #Let's get the map
-    iWantToPlayAGame = True
-    while iWantToPlayAGame:
-        mapPlayed = manager.loadPlayedMap()
-        loadOK = False
-        while not loadOK:
-            try:
-                mapPlayed.load()
-                validator.validateInitMap(mapPlayed)
-                loadOK = True
-            except RobocException as rex: 
-                manager.send("WrongMap")
-                manager.send(rex)
-                mapPlayed = manager.loadPlayedMap()
-        manager.printMaze(mapPlayed)
-        
-        #Before we play, we save
-        if mapPlayed.saveName == None:
-            path, name = manager.getSavePathAndName()
-            mapPlayed.setSavePath(path, name)
-            mapPlayed.save()
-    
-        #Now We play
-        playerWannaPlay = True
-        while not validator.thisIsTheEnd(mapPlayed) and playerWannaPlay:
-            move, times = manager.getNextMove()
-            if move == None:
-                playerWannaPlay = False
-                continue
-            timesMove = validator.validateMove(mapPlayed, move, times)
-            if timesMove == 0 :
-                manager.send("WrongMove")
-            else:
-                mapPlayed.moveAlong(move, timesMove, manager)
-            if validator.thisIsTheEnd(mapPlayed):
-                continue
-            
-        if validator.thisIsTheEnd(mapPlayed):
-            manager.keepOrDelete(mapPlayed)
-        
-        iWantToPlayAGame = manager.playAnotherGame()
-        
+    network.run()
             
 
 
